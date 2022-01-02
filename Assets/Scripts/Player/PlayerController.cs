@@ -27,10 +27,12 @@ public class PlayerController : MonoBehaviour
     internal void OnDamage(int damage)
     {
         hp -= damage;
-        Debug.Log("Player Hit");
-        if (hp < 0)
+        uiController.UpdatePlayerHealth(hp);
+
+        if (hp <= 0)
         {
-            uiController.UpdatePlayerHealth(hp);
+            Time.timeScale = 0;
+            uiController.EndGame();
         }
     }
 

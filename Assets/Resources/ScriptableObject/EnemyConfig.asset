@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   records:
   - enemy: 0
-    health: 10
+    health: 30
     detectRange: 10
     attackRange: 3
     damage: 2

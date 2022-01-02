@@ -18,12 +18,13 @@ public class DeadState : FSMState
         parent.isAlive = false;
         parent.StopCoroutine("LoopDetect");
         parent.dataBiding.Dead();
+        UI_Controller.EnemyDead();
         parent.StartCoroutine(WaitDestroy());
     }
 
     IEnumerator WaitDestroy()
     {
         yield return new WaitForSeconds(4f);
-        LeanPool.Despawn(parent);
+        GameObject.Destroy(parent.gameObject);
     }
 }

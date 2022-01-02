@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +30,7 @@ public class WeaponManager : MonoBehaviour
         get => (changeGunCoro == null && !currentWeapon.IsReloading);
     }
 
+    //TODO: Chưa cập nhật cam với acuracy
     private void Update()
     {
         fireCounter += Time.deltaTime;

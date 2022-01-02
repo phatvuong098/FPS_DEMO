@@ -82,17 +82,6 @@ public abstract class EnemyControl : FSMSystem
             GotoState(DeadState);
     }
 
-    public void RotateToAgent()
-    {
-        Vector3 dir = agent.steeringTarget - _mts.position;
-        dir.Normalize();
-        if (dir != Vector3.zero)
-        {
-            Quaternion q = Quaternion.LookRotation(dir, Vector3.up);
-            _mts.localRotation = Quaternion.RotateTowards(_mts.localRotation, q, Time.deltaTime * 720f);
-        }
-    }
-
     private void Awake()
     {
         _mts = GetComponent<Transform>();

@@ -14,7 +14,6 @@ public class AttackState : FSMState
     {
         parent.dataBiding.Attack();
         parent.attackCounter = 0;
-        parent.GotoState(parent.ChaseState);
 
         RaycastHit[] hit = Physics.BoxCastAll(parent.ChestTr.position, Vector3.one, parent.ChestTr.forward);
 
@@ -25,5 +24,7 @@ public class AttackState : FSMState
                 hit[i].collider.GetComponent<PlayerController>()?.OnDamage(parent.damage);
             }
         }
+
+        parent.GotoState(parent.ChaseState);
     }
 }

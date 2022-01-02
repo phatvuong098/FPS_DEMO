@@ -38,9 +38,8 @@ public class ChaseState : FSMState
 
             if (parent.agent.remainingDistance <= parent.attackRange)
             {
-                parent.RotateToAgent();
+                parent.agent.SetDestination(parent._mts.position);
                 parent.agent.updatePosition = false;
-                parent.agent.isStopped = true;
                 parent.dataBiding.Run = false;
                 parent.dataBiding.Walk = false;
 
