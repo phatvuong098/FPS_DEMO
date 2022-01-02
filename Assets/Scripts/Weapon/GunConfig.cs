@@ -10,6 +10,7 @@ public class GunConfigRecord
     public int total;
     public float rof;
     public int damage;
+    public float acuracy;
 }
 
 [CreateAssetMenu(fileName = "GunConfig", menuName = "ScriptableObjects/GunConfig", order = 1)]

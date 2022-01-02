@@ -9,7 +9,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] PlayerDatabiding databiding;
     [SerializeField] UI_Controller UI_Controller;
     IWeapon currentWeapon;
-    private float fireCounter;
+    private float fireCounter, currentAcuracy;
     private int currentIndex = -1;
     public Coroutine changeGunCoro;
     public bool IsFire { get; set; }
@@ -27,7 +27,7 @@ public class WeaponManager : MonoBehaviour
 
     public bool IsCanFire
     {
-        get => (changeGunCoro == null && currentWeapon.CurrentBullet > 0 && !currentWeapon.IsReloading);
+        get => (changeGunCoro == null && !currentWeapon.IsReloading);
     }
 
     private void Update()
@@ -35,7 +35,10 @@ public class WeaponManager : MonoBehaviour
         fireCounter += Time.deltaTime;
 
         if (!IsFire)
+        {
+            databiding.Firing = 0;
             return;
+        }
 
         if (currentWeapon.CurrentBullet > 0)
         {
@@ -43,8 +46,14 @@ public class WeaponManager : MonoBehaviour
             {
                 currentWeapon.Fire();
                 currentWeapon.CurrentBullet--;
+                databiding.Firing = 1;
                 UI_Controller.UpdateBullet(currentWeapon.CurrentBullet, currentWeapon.TotalBullet);
                 fireCounter = 0;
+                currentAcuracy += currentWeapon.Acuracy * Time.deltaTime;
+            }
+            else
+            {
+                databiding.Firing = 0;
             }
         }
         else if (currentWeapon.TotalBullet > 0)
@@ -56,6 +65,9 @@ public class WeaponManager : MonoBehaviour
                 currentWeapon.Reload(() => UI_Controller.UpdateBullet(currentWeapon.CurrentBullet, currentWeapon.TotalBullet));
             }
         }
+
+        // currentAcuracy -= currentWeapon.Acuracy * Time.deltaTime;
+        UI_Controller.UpdateCrossHair(currentAcuracy);
     }
 
     public void Reload()
@@ -70,9 +82,14 @@ public class WeaponManager : MonoBehaviour
     IEnumerator ChangeGunCoro()
     {
         if (currentIndex >= 0)
+        {
+            if (currentWeapon.IsReloading)
+                currentWeapon.StopAnimation();
             databiding.ShowGun = false;
+        }
 
-        yield return new WaitForSeconds(.5f);
+
+        yield return new WaitForSeconds(1f);
 
         if (currentIndex >= 0)
             weapons[currentIndex].gameObject.SetActive(false);

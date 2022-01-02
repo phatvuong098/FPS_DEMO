@@ -12,5 +12,7 @@ public interface IWeapon
     public int TotalBullet { get; set; }
     public int CurrentBullet { get; set; }
     public float Rof { get; }
+    public float Acuracy { get; }
     public bool IsReloading { get; }
+    void StopAnimation();
 }

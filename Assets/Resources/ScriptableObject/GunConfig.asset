@@ -16,10 +16,12 @@ MonoBehaviour:
   - eWeapon: 0
     clipSize: 30
     total: 121
-    rof: 0.2
+    rof: 0.1
     damage: 5
+    acuracy: 2
   - eWeapon: 1
     clipSize: 12
     total: 48
     rof: 0.3
     damage: 2
+    acuracy: 2

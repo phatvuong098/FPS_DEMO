@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class UI_Controller : MonoBehaviour
 {
     [SerializeField] TMP_Text txtClipSize;
-
+    [SerializeField] RectTransform crossHair;
+    [SerializeField] float baseCrossHairSize;
     public void UpdateBullet(int current, int total)
     {
         txtClipSize.text = current.ToString() + "/" + total.ToString();
@@ -35,5 +37,10 @@ public class UI_Controller : MonoBehaviour
     public void BTN_ChangeGun()
     {
         PlayerInput.EventChangeGun();
+    }
+
+    internal void UpdateCrossHair(float accuracy)
+    {
+        crossHair.sizeDelta += accuracy * Vector2.one;
     }
 }

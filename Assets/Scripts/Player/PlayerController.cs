@@ -88,9 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             weaponManager.IsFire = false;
             return;
-        }
-
-        databiding.Firing = isFire ? 1 : 0;
+        }  
         weaponManager.IsFire = isFire;
     }
 

@@ -20,6 +20,7 @@ public abstract class BaseWeapon : MonoBehaviour, IWeapon
     [SerializeField] protected int damage;
     [SerializeField] protected EWeapon eWeapon;
     [SerializeField] protected int clipSize;
+    [SerializeField] protected float acuracy;
 
     private Action callback;
     private bool isReloading;
@@ -32,6 +33,7 @@ public abstract class BaseWeapon : MonoBehaviour, IWeapon
         this.damage = record.damage;
         this.clipSize = record.clipSize;
         this.TotalBullet = record.total;
+        this.acuracy = record.acuracy;
         CurrentBullet = clipSize;
     }
 
@@ -41,6 +43,8 @@ public abstract class BaseWeapon : MonoBehaviour, IWeapon
     public float Rof { get => rof; }
 
     public bool IsReloading => isReloading;
+
+    public float Acuracy { get => acuracy;}
 
     public virtual void Fire()
     {
@@ -80,5 +84,11 @@ public abstract class BaseWeapon : MonoBehaviour, IWeapon
         }
         isReloading = false;
         callback.Invoke();
+    }
+
+    public void StopAnimation()
+    {
+        animator.StopPlayback();
+        isReloading = false;
     }
 }
