@@ -6,7 +6,7 @@ using System;
 
 public class UI_Controller : MonoBehaviour
 {
-    [SerializeField] TMP_Text txtClipSize;
+    [SerializeField] TMP_Text txtClipSize, txtPlayerHealth;
     [SerializeField] RectTransform crossHair;
     [SerializeField] float baseCrossHairSize;
     public void UpdateBullet(int current, int total)
@@ -39,8 +39,13 @@ public class UI_Controller : MonoBehaviour
         PlayerInput.EventChangeGun();
     }
 
-    internal void UpdateCrossHair(float accuracy)
+    public void UpdatePlayerHealth(int currentHealth)
     {
-        crossHair.sizeDelta += accuracy * Vector2.one;
+        txtPlayerHealth.text = "Health:" + currentHealth.ToString();
     }
+
+    //public void UpdateCrossHair(float accuracy)
+    //{
+    //    crossHair.sizeDelta += accuracy * Vector2.one;
+    //}
 }

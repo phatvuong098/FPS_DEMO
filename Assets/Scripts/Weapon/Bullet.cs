@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 3;
     [SerializeField] protected GameObject impactObj;
 
+    private int damage;
+    CharacterController parent;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,14 +24,23 @@ public class Bullet : MonoBehaviour
         CheckHit();
     }
 
+    public void Setup(int damage, CharacterController parent)
+    {
+        this.damage = damage;
+        this.parent = parent;
+    }
+
     protected virtual void CheckHit()
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(_mts.position - _mts.forward, _mts.forward, out hit, 1.5f))
+        if (Physics.Raycast(_mts.position, _mts.forward, out hit, 1.5f))
         {
             StopCoroutine("WaitDestroy");
             LeanPool.Despawn(_mts);
+
+            hit.transform.GetComponent<EnemyControl>()?.OnDamage(damage, parent);
+
             if (impactObj != null)
                 LeanPool.Spawn(impactObj, hit.point, Quaternion.LookRotation(-_mts.forward));
         }
@@ -42,7 +53,7 @@ public class Bullet : MonoBehaviour
 
     IEnumerator WaitDestroy()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         LeanPool.Despawn(this);
     }
 }

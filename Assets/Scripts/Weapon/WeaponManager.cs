@@ -49,7 +49,6 @@ public class WeaponManager : MonoBehaviour
                 databiding.Firing = 1;
                 UI_Controller.UpdateBullet(currentWeapon.CurrentBullet, currentWeapon.TotalBullet);
                 fireCounter = 0;
-                currentAcuracy += currentWeapon.Acuracy * Time.deltaTime;
             }
             else
             {
@@ -65,9 +64,6 @@ public class WeaponManager : MonoBehaviour
                 currentWeapon.Reload(() => UI_Controller.UpdateBullet(currentWeapon.CurrentBullet, currentWeapon.TotalBullet));
             }
         }
-
-        // currentAcuracy -= currentWeapon.Acuracy * Time.deltaTime;
-        UI_Controller.UpdateCrossHair(currentAcuracy);
     }
 
     public void Reload()

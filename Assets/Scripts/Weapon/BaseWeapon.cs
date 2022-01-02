@@ -21,11 +21,13 @@ public abstract class BaseWeapon : MonoBehaviour, IWeapon
     [SerializeField] protected EWeapon eWeapon;
     [SerializeField] protected int clipSize;
     [SerializeField] protected float acuracy;
+    [SerializeField] CharacterController parent;
 
     private Action callback;
     private bool isReloading;
     private void Awake()
     {
+        parent = GetComponentInParent<CharacterController>();
         GunConfig gunConfig = Resources.Load("ScriptableObject/GunConfig", typeof(GunConfig)) as GunConfig;
         GunConfigRecord record = gunConfig.GetConfigByEWeapon(eWeapon);
 
@@ -48,7 +50,8 @@ public abstract class BaseWeapon : MonoBehaviour, IWeapon
 
     public virtual void Fire()
     {
-        LeanPool.Spawn(buttletObj, firePos.position, Quaternion.LookRotation(firePos.forward));
+       GameObject bullet = LeanPool.Spawn(buttletObj, firePos.position, Quaternion.LookRotation(firePos.forward));
+       bullet.GetComponent<Bullet>().Setup(this.damage, parent); 
     }
 
     public EWeapon GetEWeapon()

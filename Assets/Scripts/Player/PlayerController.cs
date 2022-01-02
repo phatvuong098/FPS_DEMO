@@ -10,21 +10,36 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] WeaponManager weaponManager;
     [SerializeField] PlayerDatabiding databiding;
-    [SerializeField] PlayerInput input;
+    [SerializeField] UI_Controller uiController;
     [SerializeField] Camera _cam;
     [SerializeField] Transform _mtsPlayer;
     [SerializeField] private Vector2 Yaw_Pitch;
     [SerializeField] private Vector2 ClampPitch;
+    [SerializeField] private int baseHP = 10;
+
     private float horizontal, vertical;
     Vector2 camDelta;
     private Transform _mts;
     private Vector3 _moveDir;
     private bool isAim;
+    private int hp;
+
+    internal void OnDamage(int damage)
+    {
+        hp -= damage;
+        Debug.Log("Player Hit");
+        if (hp < 0)
+        {
+            uiController.UpdatePlayerHealth(hp);
+        }
+    }
 
     private void Awake()
     {
         characterController.minMoveDistance = 0;
         _mts = transform;
+        hp = baseHP;
+        uiController.UpdatePlayerHealth(hp);
     }
 
     private void Update()
@@ -88,7 +103,7 @@ public class PlayerController : MonoBehaviour
         {
             weaponManager.IsFire = false;
             return;
-        }  
+        }
         weaponManager.IsFire = isFire;
     }
 
