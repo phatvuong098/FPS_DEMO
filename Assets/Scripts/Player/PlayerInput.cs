@@ -23,6 +23,7 @@ public class PlayerInput : MonoBehaviour
         Application.targetFrameRate = 30;
     }
 
+#if UNITY_EDITOR
     // Update is called once per frame
     void Update()
     {
@@ -70,4 +71,5 @@ public class PlayerInput : MonoBehaviour
             }
         }
     }
+#endif
 }
